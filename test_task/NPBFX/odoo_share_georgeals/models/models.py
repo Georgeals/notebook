@@ -15,7 +15,7 @@ class odoo_share_georgeals(models.Model):
 
     def upload(self):
         if not(self.name):
-            raise UserError(('Please select file to download'))
+            raise UserError(('Please select file to upload'))
         self.link=self.get_base_url()+'/web/content/odoo_share_georgeals.odoo_share_georgeals/'+str(self.id)+'/datas/'+self.name        
         vals=self.read()[0]
         self.write(vals)
