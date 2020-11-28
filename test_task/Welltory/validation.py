@@ -17,7 +17,16 @@ def searcherror(event, data, filename_event):
         with open('task_folder/schema/'+event + '.schema') as f:                
             schema=json.loads(f.read())
             logging.debug(f'файл схемы для {event} существует.') 
-        v=jsonschema.Draft7Validator(schema)                   
+        v=jsonschema.Draft7Validator(schema) 
+        
+        # Не понимаю что именно здесь имеется ввиду " Часть схем 100% правильных, часть нет.", 
+        # но на всякий случай добавил проверку. 
+        #----------------
+        try:
+            v.check_schema(schema)
+        except Exception as e:
+            logging.error(f'В файле "task_folder/schema/{event}.schema" ошибка! Текст ошибки: {e}')
+        # ---------------
         if v.is_valid(data):
             logging.info(f'Отлично!!! Данные события {event}, из файла {filename_event} не содержат ошибок!!!')
         else:
